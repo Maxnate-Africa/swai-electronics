@@ -1,3 +1,5 @@
+---
+---
 /* RESET & BASE */
 * {
     margin: 0;
@@ -28,13 +30,14 @@ a {
     width: 25%;
     background-color: #E60000; /* SWAI RED */
     color: white;
-    padding: 40px;
+    padding: 30px;
     position: fixed;
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     z-index: 100;
+    overflow-y: auto;
 }
 
 .brand-logo {
@@ -47,7 +50,7 @@ a {
     border: 0;
     height: 2px;
     background: white;
-    margin: 2px 0;
+    margin: 15px 0;
 }
 
 @media (max-width: 1024px) {
@@ -60,7 +63,7 @@ a {
     border: 0;
     height: 2px;
     background: white;
-    margin: 40px 0;
+    margin: 25px 0;
 }
 
 /* .brand h1 {
@@ -74,22 +77,21 @@ a {
 .nav-links {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 12px;
+    margin-top: 20px;
 }
 
 .nav-links a {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 400;
-    opacity: 0.85;
+    color: white;
     transition: all 0.3s ease;
-    padding: 12px 15px;
+    padding: 8px 15px;
     border-radius: 8px;
     border-left: 3px solid transparent;
 }
 
 .nav-links a:hover, .nav-links a.active {
-    opacity: 1;
-    background-color: rgba(255, 255, 255, 0.1);
     border-left-color: white;
     font-weight: 500;
 }
@@ -100,7 +102,7 @@ a {
 
 .sidebar-footer p {
     font-size: 0.9rem;
-    opacity: 0.8;
+    color: white;
     margin-bottom: 10px;
 }
 
@@ -109,7 +111,7 @@ a {
     flex-direction: row;
     gap: 15px;
     justify-content: center;
-    margin: 15px 0;
+    margin: 10px 0;
 }
 .social-links .icon {
     width: 32px;
@@ -130,10 +132,10 @@ a {
 }
 
 .copyright {
-    font-size: 0.8rem;
-    opacity: 0.7;
+    font-size: 0.75rem;
+    color: white;
     text-align: center;
-    margin-top: 15px;
+    margin-top: 10px;
 }
 
 .copyright a {
@@ -143,7 +145,7 @@ a {
 }
 
 .copyright a:hover {
-    opacity: 1;
+    text-decoration: none;
 }
 
 /* MAIN CONTENT (WHITE) */
@@ -155,28 +157,71 @@ a {
 
 .mobile-header {
     display: none;
-    position: relative;
-    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Mobile inline filters panel (collapsed by default) */
+.mobile-inline-filters {
+    display: none; /* hidden on desktop */
+}
+.mobile-inline-filters .filter-inner { max-width: 100%; margin: 0 auto; }
+.filter-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.filter-chips .chip {
+    background: #f1f1f1;
+    color: #222;
+    padding: 6px 10px;
+    font-size: 0.7rem;
+    border-radius: 16px;
+    text-decoration: none;
+    line-height: 1;
+    transition: background .25s ease, color .25s ease;
+}
+.filter-chips .chip.active { background: #E60000; color: #fff; }
+.filter-chips .chip:focus { outline: 2px solid #E60000; outline-offset: 2px; }
+.filter-controls { display: flex; gap: 8px; }
+.filter-controls input, .filter-controls select {
+    flex: 1 1 50%;
+    padding: 8px 10px;
+    font-size: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #fff;
+}
+
+.filters-toggle { /* reuse hamburger visual but semantic different */ }
+
+.mobile-logo-link {
+    display: flex !important;
+    align-items: center;
+    flex-shrink: 0;
+    visibility: visible;
+    opacity: 1;
+}
+
+.mobile-logo {
+    max-height: 40px;
+    width: auto;
+    display: block;
 }
 
 .hamburger-menu {
     display: none;
-    position: absolute;
-    left: 15px;
     background: none;
     border: none;
     cursor: pointer;
-    padding: 5px;
+    padding: 8px;
     z-index: 1001;
-    width: 30px;
-    height: 25px;
+    width: 35px;
+    height: 30px;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
 }
 
 .hamburger-menu span {
     display: block;
-    width: 100%;
+    width: 28px;
     height: 3px;
     background-color: white;
     border-radius: 2px;
@@ -184,15 +229,16 @@ a {
 }
 
 .hamburger-menu.active span:nth-child(1) {
-    transform: rotate(45deg) translate(8px, 8px);
+    transform: rotate(45deg) translate(9px, 9px);
 }
 
 .hamburger-menu.active span:nth-child(2) {
     opacity: 0;
+    transform: translateX(20px);
 }
 
 .hamburger-menu.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(7px, -7px);
+    transform: rotate(-45deg) translate(9px, -9px);
 }
 
 /* BREADCRUMBS */
@@ -1266,22 +1312,9 @@ a {
 
 /* RESPONSIVE */
 @media (max-width: 1024px) {
-    .sidebar {
-        position: fixed;
-        left: -280px;
-        top: 0;
-        height: 100vh;
-        width: 280px;
-        z-index: 1000;
-        transition: left 0.3s ease;
-        display: block;
-        overflow-y: auto;
-    }
-    
-    .sidebar.active {
-        left: 0;
-        box-shadow: 2px 0 10px rgba(0,0,0,0.3);
-    }
+    /* Hide sidebar entirely; using top collapsible filters instead */
+    .sidebar { display: none; }
+    .sidebar.active { display: none; }
 
     .content {
         margin-left: 0;
@@ -1291,27 +1324,66 @@ a {
 
     .mobile-header {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
         background-color: #E60000;
         color: white;
-        padding: 15px;
-        margin: -20px -20px 30px -20px;
+        padding: 12px 15px;
+        margin: -20px -20px 0 -20px; /* remove bottom margin to couple with filters panel */
         position: sticky;
         top: 0;
-        z-index: 1000;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        z-index: 1100;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        min-height: 60px;
     }
-    
+    .mobile-header-inner { 
+        display: flex; 
+        align-items: center; 
+        width: 100%; 
+        justify-content: space-between;
+    }
+    .mobile-logo-link {
+        order: 1;
+        display: flex !important;
+        align-items: center;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    .mobile-logo {
+        height: 40px;
+        width: 171px; /* Explicit width based on aspect ratio */
+        max-width: 100%;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        object-fit: contain;
+    }
     .hamburger-menu {
+        order: 2;
+    }
+    .mobile-inline-filters {
+        display: block;
+        background: #fff;
+        border-bottom: 1px solid #eee;
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height .35s ease;
+        padding: 0 15px;
+        margin: 0 -20px 15px -20px;
+    }
+    .mobile-inline-filters.open { max-height: 120px; padding-top: 10px; padding-bottom: 12px; }
+    .mobile-inline-filters .filter-inner { opacity: 0; transition: opacity .25s ease .1s; }
+    .mobile-inline-filters.open .filter-inner { opacity: 1; }
+    .filter-chips .chip { font-size: 0.65rem; }
+    .hamburger-menu { display: flex; background:none; border:none; cursor:pointer; padding:8px; width:35px; height:30px; flex-direction:column; justify-content:space-between; }
+    .hamburger-menu span { display:block; width:28px; height:3px; background:#fff; border-radius:3px; transition:transform .3s ease, opacity .3s ease; }
+    .hamburger-menu.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+    .hamburger-menu.active span:nth-child(2) { opacity:0; }
+    .hamburger-menu.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }    .hamburger-menu {
         display: flex;
     }
 
-    .mobile-logo {
-        max-height: 40px;
-        width: auto;
-        display: block;
-    }
+    /* .mobile-logo definition removed as it is already defined above */
 
     .hero-text {
         margin-bottom: 40px;
@@ -1349,6 +1421,8 @@ a {
 
     .image-container {
         margin-bottom: 10px;
+        /* Allow order button to be visible below image on touch devices */
+        overflow: visible;
     }
 
     .product-info h3 {

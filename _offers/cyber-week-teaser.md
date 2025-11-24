@@ -5,7 +5,7 @@ start: 2025-11-23T00:00:00+03:00
 end: 2025-12-07T23:59:59+03:00
 priority: 5
 published: true
-image: "/assets/images/offers-logo.png"
+image: "/assets/images/offers-logo.svg"
 whatsapp_message: "Hi! Please notify me when Cyber Week deals start."
 ---
 

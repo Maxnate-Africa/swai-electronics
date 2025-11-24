@@ -39,9 +39,6 @@ pagination:
                         {% else %}
                         <div class="placeholder-image" aria-label="No image available"></div>
                         {% endif %}
-            <a href="https://wa.me/{{ site.whatsapp_phone }}?text={{ product.whatsapp_message | uri_escape }}" target="_blank" class="whatsapp-btn">
-                Press your Order
-            </a>
         </div>
                 <div class="product-info">
                         <h3>
@@ -138,12 +135,12 @@ pagination:
         "short_description": {{ product.short_description | default: "" | jsonify }},
         "long_description": {{ product.long_description | default: "" | jsonify }},
         "key_features": {{ product.key_features | default: "[]" | jsonify }},
-        "specifications": {{ product.specifications | default: "[]" | jsonify }},
+        "specifications": {{ product.specs | default: "[]" | jsonify }},
         "whatsapp_message": {{ product.whatsapp_message | default: "" | jsonify }},
         "pricing": {
-            "regular_price": {{ product | get_product_price: 'price' | replace: ',', '' }},
-            "sale_price": {{ product | get_product_price: 'sale_price' | replace: ',', '' }},
-            "on_sale": {{ product | is_on_sale }}
+            "regular_price": {{ product | get_product_price: 'price' | replace: ',', '' | default: 0 }},
+            "sale_price": {{ product | get_product_price: 'sale_price' | replace: ',', '' | default: 0 }},
+            "on_sale": {{ product | is_on_sale | default: false }}
         }
     }{% unless forloop.last %},{% endunless %}
     {% endfor %}
@@ -337,17 +334,27 @@ pagination:
             const quickViewBtns = document.querySelectorAll('.quick-view-btn');
             const productData = JSON.parse(document.getElementById('productData').textContent);
             
+            console.log('Quick View initialized:', {
+                modal: !!modal,
+                closeBtn: !!closeBtn,
+                buttonsFound: quickViewBtns.length,
+                productsLoaded: productData.length
+            });
+            
             // Open modal
             quickViewBtns.forEach(btn => {
                 btn.addEventListener('click', function(e) {
                     e.preventDefault();
+                    console.log('Quick View button clicked');
                     const productIndex = parseInt(this.getAttribute('data-product'));
                     const product = productData[productIndex];
+                    console.log('Opening product:', productIndex, product);
                     
                     if (product) {
                         populateModal(product);
                         modal.classList.add('active');
                         document.body.style.overflow = 'hidden';
+                        console.log('Modal should be visible now');
                     }
                 });
             });

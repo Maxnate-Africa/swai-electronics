@@ -5,7 +5,7 @@ start: 2025-11-22T00:00:00+03:00
 end: 2025-11-30T23:59:59+03:00
 priority: 10
 published: true
-image: "/assets/images/offers-logo.png"
+image: "/assets/images/offers-logo.svg"
 cta_text: "Shop deals"
 cta_url: "/"
 whatsapp_message: "Hi! I'd like to claim the Weekend Mega Sale offer."

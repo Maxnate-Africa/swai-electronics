@@ -27,7 +27,7 @@
     {% if ogimg %}
     <meta name="twitter:image" content="{% if site.url %}{{ site.url }}{% endif %}{{ ogimg | relative_url }}">
     {% endif %}
-    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}?v={{ site.time | date: '%s' }}">
     <!-- Google Fonts for a modern look -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
     <!-- Netlify Identity Widget -->
