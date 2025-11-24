@@ -3,11 +3,12 @@ const ProductPreview = createClass({
   render: function() {
     const entry = this.props.entry;
     const title = entry.getIn(['data', 'title']);
-    const pricingInfo = entry.getIn(['data', 'pricing_info']);
-    const price = pricingInfo ? pricingInfo.get('price') : entry.getIn(['data', 'price']);
-    const salePrice = pricingInfo ? pricingInfo.get('sale_price') : entry.getIn(['data', 'sale_price']);
-    const saleStart = pricingInfo ? pricingInfo.get('sale_start') : entry.getIn(['data', 'sale_start']);
-    const saleEnd = pricingInfo ? pricingInfo.get('sale_end') : entry.getIn(['data', 'sale_end']);
+    
+    // Flattened pricing structure
+    const price = entry.getIn(['data', 'price']);
+    const salePrice = entry.getIn(['data', 'sale_price']);
+    const saleStart = entry.getIn(['data', 'sale_start']);
+    const saleEnd = entry.getIn(['data', 'sale_end']);
     
     // Check if sale is currently active based on dates
     const now = new Date();
@@ -21,7 +22,7 @@ const ProductPreview = createClass({
     const category = entry.getIn(['data', 'category']);
     const stock = entry.getIn(['data', 'stock'], 1);
     const image = entry.getIn(['data', 'image']);
-    const description = entry.getIn(['data', 'description']);
+    const description = entry.getIn(['data', 'short_description']);
     
     // Use calculated sale status
     const isOnSale = saleActive;

@@ -23,16 +23,10 @@ collections:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Brand", name: "brand", widget: "string", required: false }
       - { label: "Category", name: "category", widget: "select", options: ["televisions", "audio", "home-appliances"] }
-      - label: "Pricing & Sales"
-        name: "pricing_info"
-        widget: "object"
-        collapsed: false
-        summary: "Regular: {{fields.price}} TSh | Sale: {{fields.sale_price}} TSh"
-        fields:
-          - { label: "Regular Price (TSh)", name: "price", widget: "number", value_type: "int", min: 1000, hint: "Regular selling price in Tanzanian Shillings" }
-          - { label: "Sale Price (TSh)", name: "sale_price", widget: "number", value_type: "int", min: 100, required: false, hint: "💡 Enter sale price to show in 'Sale Items' filter. Must be lower than regular price." }
-          - { label: "Sale Start Date", name: "sale_start", widget: "datetime", required: false, hint: "⏰ When sale pricing becomes active (leave empty for immediate activation)" }
-          - { label: "Sale End Date", name: "sale_end", widget: "datetime", required: false, hint: "⏰ When sale pricing expires (leave empty for permanent sale)" }
+      - { label: "Regular Price (TSh)", name: "price", widget: "string", hint: "Regular selling price (e.g. 2,500,000)" }
+      - { label: "Sale Price (TSh)", name: "sale_price", widget: "string", required: false, hint: "💡 Enter sale price to show in 'Sale Items' filter. Must be lower than regular price." }
+      - { label: "Sale Start Date", name: "sale_start", widget: "datetime", required: false, hint: "⏰ When sale pricing becomes active (leave empty for immediate activation)" }
+      - { label: "Sale End Date", name: "sale_end", widget: "datetime", required: false, hint: "⏰ When sale pricing expires (leave empty for permanent sale)" }
       - { label: "Image", name: "image", widget: "image" }
       - label: "Availability"
         name: "stock"
@@ -42,8 +36,20 @@ collections:
           - { label: "Out of Stock", value: 0 }
         default: 1
       - { label: "WhatsApp Message", name: "whatsapp_message", widget: "string", hint: "Custom message when customers contact via WhatsApp" }
-      - { label: "Short Description", name: "description", widget: "text", required: false, hint: "Brief product description for listings" }
+      - { label: "Short Description", name: "short_description", widget: "text", required: false, hint: "Brief product description for listings" }
       - { label: "Long Description", name: "long_description", widget: "markdown", required: false, hint: "Detailed product information" }
+      - label: "Key Features"
+        name: "key_features"
+        widget: "list"
+        required: false
+        field: { label: "Feature", name: "feature", widget: "string" }
+      - label: "Specifications"
+        name: "specs"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "Label", name: "label", widget: "string" }
+          - { label: "Value", name: "value", widget: "string" }
 
   - name: "offers"
     label: "Offers"

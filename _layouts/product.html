@@ -33,26 +33,36 @@ layout: default
      {% if page.price %}
      <p class="price">TSh {{ page.price | format_price }}</p>
      {% endif %}
+
+     {% if page.short_description %}
+     <p class="product-summary">{{ page.short_description }}</p>
+     {% endif %}
+
     <a href="https://wa.me/{{ site.whatsapp_phone }}?text={{ page.whatsapp_message | uri_escape }}" target="_blank" class="whatsapp-btn whatsapp-btn-detail">
       ORDER ON WHATSAPP
     </a>
     <div class="product-sections">
-      {% if content %}
+      {% assign product_content = page.long_description | markdownify %}
+      {% if product_content == nil or product_content == empty %}
+        {% assign product_content = content %}
+      {% endif %}
+
+      {% if product_content and product_content != empty %}
       <section class="product-section">
         <h2>Overview</h2>
         <div class="expandable" id="overview">
-          {{ content }}
+          {{ product_content }}
           <div class="fade-mask" aria-hidden="true"></div>
         </div>
         <button class="expand-toggle" data-target="overview" aria-expanded="false" aria-controls="overview">Explore more</button>
       </section>
       {% endif %}
 
-      {% if page.features %}
+      {% if page.key_features %}
       <section class="product-section">
         <h2>Key Features</h2>
         <ul class="features-list">
-          {% for f in page.features %}
+          {% for f in page.key_features %}
           <li>{{ f }}</li>
           {% endfor %}
         </ul>

@@ -2,7 +2,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page.seo.title | default: page.title | default: site.title }}</title>
-    <meta name="description" content="{{ page.seo.description | default: page.excerpt | strip_html | default: site.description }}">
+    <meta name="description" content="{{ page.seo.description | default: page.short_description | default: page.excerpt | strip_html | default: site.description }}">
     <link rel="canonical" href="{% if site.url %}{{ site.url }}{% endif %}{{ page.url | relative_url }}">
     <!-- Favicon -->
     <link rel="icon" href="{{ '/assets/images/favicon.ico' | relative_url }}" sizes="any">
