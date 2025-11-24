@@ -47,6 +47,9 @@ Thumbs.db
 # Logs
 *.log
 
+# Internal maintenance scripts (not needed in production)
+scripts/cleanup-images.ps1
+
 # Environment variables
 .env
 .env.local

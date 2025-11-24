@@ -12,14 +12,7 @@ module Jekyll
       "TSh #{formatted}"
     end
 
-    def format_price_raw(input)
-      return '' if input.nil?
-      cleaned = input.to_s.strip.gsub(/[^0-9.]/,'')
-      return '' if cleaned.empty?
-      num = cleaned.to_f
-      int_part = num.round
-      int_part.to_s.reverse.scan(/\d{1,3}/).join(',').reverse
-    end
+    # Removed unused filter format_price_raw (only referenced in docs, not in templates)
 
     def calculate_discount(original_price, sale_price)
       return 0 if original_price.nil? || sale_price.nil?
