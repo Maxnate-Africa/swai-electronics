@@ -20,8 +20,8 @@ whatsapp_phone: "255685129530"
 # Offers module config
 offers:
   # Path to a small logo shown on the floating offers card header
-  # Example: "/assets/images/offers-logo.png"
-  logo: "/assets/images/offers-logo.png"
+  # Example: "/assets/images/offers-logo.svg"
+  logo: "/assets/images/offers-logo.svg"
 
 # Build settings
 markdown: kramdown
