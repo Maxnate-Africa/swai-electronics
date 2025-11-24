@@ -15,10 +15,13 @@ Usage examples:
 
 PRODUCTS_DIR = Path('assets/images/products')
 
-parser = argparse.ArgumentParser(description='Generate responsive image variants (PNG + WebP).')
+parser = argparse.ArgumentParser(description='Generate responsive image variants (PNG + WebP + AVIF).')
 parser.add_argument('--widths', default='300,600', help='Comma-separated list of target widths (integers).')
 parser.add_argument('--webp-quality-original', type=int, default=88, help='Quality for original (full size) WebP.')
 parser.add_argument('--webp-quality', type=int, default=82, help='Quality for resized WebP variants.')
+parser.add_argument('--avif-quality-original', type=int, default=75, help='Quality for original (full size) AVIF.')
+parser.add_argument('--avif-quality', type=int, default=65, help='Quality for resized AVIF variants.')
+parser.add_argument('--enable-avif', action='store_true', help='Enable AVIF generation (slower but better compression).')
 parser.add_argument('--png-compress-level', type=int, default=6, help='PNG compress_level (0-9).')
 parser.add_argument('--lossless-threshold', type=int, default=900, help='Width threshold above which original WebP saved lossless.')
 args = parser.parse_args()
@@ -61,6 +64,19 @@ for img_path in PRODUCTS_DIR.glob('*.png'):
 
         rgb.save(original_webp_path, **webp_kwargs)
 
+        # Generate AVIF if enabled
+        original_avif_path = None
+        if args.enable_avif:
+            try:
+                original_avif_path = PRODUCTS_DIR / f'{stem}.avif'
+                avif_quality = args.avif_quality_original
+                if img.width >= args.lossless_threshold:
+                    avif_quality = min(args.avif_quality_original + 5, 100)
+                rgb.save(original_avif_path, 'AVIF', quality=avif_quality, speed=4)
+            except Exception as e:
+                print(f'  Warning: AVIF generation failed for {stem}: {e}')
+                original_avif_path = None
+
         variant_entries = []
         for w in valid_widths:
             ratio = w / img.width
@@ -69,23 +85,36 @@ for img_path in PRODUCTS_DIR.glob('*.png'):
 
             webp_variant = PRODUCTS_DIR / f'{stem}-{w}.webp'
             png_variant = PRODUCTS_DIR / f'{stem}-{w}.png'
+            avif_variant = PRODUCTS_DIR / f'{stem}-{w}.avif' if args.enable_avif else None
 
             resized.save(webp_variant, 'WEBP', quality=args.webp_quality, method=6)
             resized.save(png_variant, optimize=True, compress_level=args.png_compress_level)
 
-            variant_entries.append({
+            entry = {
                 'width': w,
                 'height': new_h,
                 'webp': webp_variant.name,
                 'png': png_variant.name,
-            })
+            }
 
-        manifest[img_path.name] = {
+            if args.enable_avif:
+                try:
+                    resized.save(avif_variant, 'AVIF', quality=args.avif_quality, speed=4)
+                    entry['avif'] = avif_variant.name
+                except Exception as e:
+                    print(f'  Warning: AVIF generation failed for {stem}-{w}: {e}')
+
+            variant_entries.append(entry)
+
+        manifest_entry = {
             'original': img_path.name,
             'original_webp': original_webp_path.name,
             'original_dimensions': {'width': img.width, 'height': img.height},
             'variants': variant_entries
         }
+        if original_avif_path:
+            manifest_entry['original_avif'] = original_avif_path.name
+        manifest[img_path.name] = manifest_entry
 
         sizes = [original_webp_path.stat().st_size] + [ (PRODUCTS_DIR / v['webp']).stat().st_size for v in variant_entries ]
         print(f"Generated {len(variant_entries)} variant(s) for {img_path.name} | original webp {human_size(sizes[0])}")

@@ -14,6 +14,7 @@ layout: default
     {% if page.image %}
     {% assign base = page.image | replace: '.png','' %}
     <picture>
+      <source type="image/avif" srcset="{{ base }}-300.avif 300w, {{ base }}-600.avif 600w, {{ base }}.avif" sizes="(max-width: 800px) 100vw, 600px">
       <source type="image/webp" srcset="{{ base }}-300.webp 300w, {{ base }}-600.webp 600w, {{ base }}.webp" sizes="(max-width: 800px) 100vw, 600px">
       <img src="{{ page.image | relative_url }}" alt="{{ page.title }} product image" loading="lazy" width="600" height="600" style="max-width:100%;height:auto;object-fit:cover;" srcset="{{ base }}-300.png 300w, {{ base }}-600.png 600w, {{ page.image | relative_url }}" sizes="(max-width: 800px) 100vw, 600px">
     </picture>
@@ -90,6 +91,7 @@ layout: default
         {% if r.image %}
         {% assign base = r.image | replace: '.png','' %}
         <picture>
+          <source type="image/avif" srcset="{{ base }}-300.avif 300w, {{ base }}-600.avif 600w, {{ base }}.avif" sizes="(max-width: 600px) 50vw, 200px">
           <source type="image/webp" srcset="{{ base }}-300.webp 300w, {{ base }}-600.webp 600w, {{ base }}.webp" sizes="(max-width: 600px) 50vw, 200px">
           <img src="{{ r.image | relative_url }}" alt="{{ r.title }} related product image" loading="lazy" width="200" height="200" style="width:100%;height:100%;object-fit:cover;" srcset="{{ base }}-300.png 300w, {{ base }}-600.png 600w, {{ r.image | relative_url }}" sizes="(max-width: 600px) 50vw, 200px">
         </picture>
