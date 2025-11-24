@@ -1,9 +1,12 @@
 [build]
+  # Only deploy the CMS admin from this repo to Netlify
   publish = "netlify-deploy"
-  command = "echo 'Build completed by GitHub Actions'"
+  command = "bash scripts/netlify-build.sh"
 
 [build.environment]
   NODE_VERSION = "18"
+  RUBY_VERSION = "3.1.0"
+  JEKYLL_ENV = "production"
 
 [[redirects]]
   from = "/*"
