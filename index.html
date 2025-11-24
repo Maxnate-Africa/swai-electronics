@@ -28,12 +28,16 @@ pagination:
     {% assign effective_price = product | get_effective_price %}
     {% assign on_sale = product | is_on_sale %}
     <div class="product-card" data-category="{{ product.category }}" data-price="{{ effective_price | replace: ',', '' }}" data-on-sale="{{ on_sale }}">
-        <div class="image-container">
-            {% if product.image %}
-            <img src="{{ product.image | relative_url }}" alt="{{ product.title }} product image" width="250" height="250" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
-            {% else %}
-            <div class="placeholder-image" aria-label="No image available"></div>
-            {% endif %}
+                <div class="image-container">
+                        {% if product.image %}
+                        {% assign base = product.image | replace: '.png','' %}
+                        <picture>
+                            <source type="image/webp" srcset="{{ base }}-300.webp 300w, {{ base }}-600.webp 600w, {{ base }}.webp" sizes="(max-width: 480px) 50vw, (max-width: 1024px) 25vw, 250px">
+                            <img src="{{ product.image | relative_url }}" alt="{{ product.title }} product image" width="250" height="250" style="width:100%;height:100%;object-fit:cover;" loading="lazy" srcset="{{ base }}-300.png 300w, {{ base }}-600.png 600w, {{ product.image | relative_url }}" sizes="(max-width: 480px) 50vw, (max-width: 1024px) 25vw, 250px">
+                        </picture>
+                        {% else %}
+                        <div class="placeholder-image" aria-label="No image available"></div>
+                        {% endif %}
             <a href="https://wa.me/{{ site.whatsapp_phone }}?text={{ product.whatsapp_message | uri_escape }}" target="_blank" class="whatsapp-btn">
                 Press your Order
             </a>

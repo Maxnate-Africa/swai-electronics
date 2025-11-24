@@ -50,6 +50,13 @@ Thumbs.db
 # Internal maintenance scripts (not needed in production)
 scripts/cleanup-images.ps1
 
+# Generated responsive image variants (do not commit)
+assets/images/products/*-300.png
+assets/images/products/*-600.png
+assets/images/products/*-300.webp
+assets/images/products/*-600.webp
+assets/images/products/*.webp
+
 # Environment variables
 .env
 .env.local

@@ -12,7 +12,11 @@ layout: default
 <div class="product-detail">
   <div class="product-detail-media">
     {% if page.image %}
-    <img src="{{ page.image | relative_url }}" alt="{{ page.title }} product image" loading="lazy" width="600" height="600" style="max-width:100%;height:auto;object-fit:cover;">
+    {% assign base = page.image | replace: '.png','' %}
+    <picture>
+      <source type="image/webp" srcset="{{ base }}-300.webp 300w, {{ base }}-600.webp 600w, {{ base }}.webp" sizes="(max-width: 800px) 100vw, 600px">
+      <img src="{{ page.image | relative_url }}" alt="{{ page.title }} product image" loading="lazy" width="600" height="600" style="max-width:100%;height:auto;object-fit:cover;" srcset="{{ base }}-300.png 300w, {{ base }}-600.png 600w, {{ page.image | relative_url }}" sizes="(max-width: 800px) 100vw, 600px">
+    </picture>
     {% endif %}
   </div>
   <div class="product-detail-info">
@@ -84,7 +88,11 @@ layout: default
     <a class="related-card" href="{{ r.url | relative_url }}" aria-label="View {{ r.title }}">
       <div class="image-container">
         {% if r.image %}
-        <img src="{{ r.image | relative_url }}" alt="{{ r.title }} related product image" loading="lazy" width="200" height="200" style="width:100%;height:100%;object-fit:cover;">
+        {% assign base = r.image | replace: '.png','' %}
+        <picture>
+          <source type="image/webp" srcset="{{ base }}-300.webp 300w, {{ base }}-600.webp 600w, {{ base }}.webp" sizes="(max-width: 600px) 50vw, 200px">
+          <img src="{{ r.image | relative_url }}" alt="{{ r.title }} related product image" loading="lazy" width="200" height="200" style="width:100%;height:100%;object-fit:cover;" srcset="{{ base }}-300.png 300w, {{ base }}-600.png 600w, {{ r.image | relative_url }}" sizes="(max-width: 600px) 50vw, 200px">
+        </picture>
         {% else %}
         <div class="placeholder-image" aria-label="No image available"></div>
         {% endif %}
