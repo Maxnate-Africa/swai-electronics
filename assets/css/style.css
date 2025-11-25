@@ -1829,7 +1829,7 @@ a {
 }
 
 .footer-brand-col .footer-logo {
-    height: 20px;
+    height: 30px;
     width: auto;
     margin-bottom: 10px;
     filter: brightness(0) invert(1); /* Ensure logo is white */
