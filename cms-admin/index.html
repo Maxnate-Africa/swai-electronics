@@ -18,45 +18,9 @@
   
   <!-- CMS Enhancement Script -->
   <script>
-    // Initialize CMS enhancements
-    CMS.init({
-      config: {
-        load_config_file: true
-      }
-    });
-    
-    // Enhanced validation for pricing and sale filter integration
-    CMS.registerEventListener({
-      name: 'prePersist',
-      handler: ({ entry }) => {
-        const data = entry.get('data');
-        const pricingInfo = data.get('pricing_info') || data;
-        
-        const price = pricingInfo.get('price');
-        const salePrice = pricingInfo.get('sale_price');
-        
-        // Validate sale price is lower than regular price
-        if (salePrice && price && salePrice >= price) {
-          throw new Error('❌ Sale price (TSh ' + salePrice.toLocaleString() + ') must be lower than regular price (TSh ' + price.toLocaleString() + ')');
-        }
-        
-        // Validate sale dates
-        const startDate = pricingInfo.get('sale_start');
-        const endDate = pricingInfo.get('sale_end');
-        
-        if (startDate && endDate && new Date(startDate) >= new Date(endDate)) {
-          throw new Error('❌ Sale start date must be before end date');
-        }
-        
-        // Show success message for sale items
-        if (salePrice && price && salePrice < price) {
-          const discount = Math.round(((price - salePrice) / price) * 100);
-          console.log(`✅ Sale item created! ${discount}% discount will appear in Sale Items filter`);
-        }
-        
-        return entry;
-      }
-    });
+    // Decap CMS initialization
+    console.log('✅ Decap CMS loaded with custom preview templates');
+    console.log('💡 Sale pricing validation handled by preview template');
   </script>
 </body>
 </html>
