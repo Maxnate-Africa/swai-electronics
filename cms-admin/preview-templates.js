@@ -47,9 +47,23 @@ const ProductPreview = createClass({
       return 'TSh ' + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
     
+    // Ensure images render correctly under GitHub Pages base path (e.g., /swai-electronics)
+    const withBase = (p) => {
+      if (!p) return '';
+      if (/^https?:\/\//i.test(p)) return p;
+      let base = '';
+      try {
+        const path = window.location.pathname || '';
+        const idx = path.indexOf('/cms-admin/');
+        if (idx > 0) base = path.slice(0, idx);
+      } catch (e) {}
+      if (p.startsWith('/')) return base + p;
+      return base + '/' + p;
+    };
+
     return h('div', {className: 'cms-preview-card'}, [
       h('div', {className: 'cms-preview-image'}, [
-        image ? h('img', {src: entry.getIn(['data', 'image'])}) : h('div', {className: 'placeholder'}, '📷')
+        image ? h('img', {src: withBase(entry.getIn(['data', 'image']))}) : h('div', {className: 'placeholder'}, '📷')
       ]),
       h('div', {className: 'cms-preview-info'}, [
         h('h3', {}, [
